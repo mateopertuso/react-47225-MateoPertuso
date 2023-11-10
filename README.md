@@ -1,5 +1,5 @@
 # ECOMMERCE VENTA DE JUEGOS DIGITALES 
-![](src\assets\screen.png)
+![](./src/assets/screen.png)
 
 ### PROYECTO FINAL CURSO REACT JS - CODERHOUSE
 ### HERRAMIENTAS UTILIZADAS:
