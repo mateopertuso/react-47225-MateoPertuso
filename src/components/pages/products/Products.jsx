@@ -1,7 +1,7 @@
 const Productos = () => {
   return (
-    <div>
-      <h1>Estoy en los productos</h1>
+    <div style={{textAlign: "center", fontFamily:"arial", paddingTop: 220}}>
+      <h1>Estamos trabajando..</h1>
     </div>
   );
 };

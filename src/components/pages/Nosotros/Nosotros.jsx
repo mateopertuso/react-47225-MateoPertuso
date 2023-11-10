@@ -1,7 +1,7 @@
 const Nosotros = () => {
   return (
-    <div>
-      <h1>SOBRE NOSOTROS</h1>
+    <div style={{textAlign: "center", fontFamily:"arial", paddingTop: 220}}>
+      <h1>Proximamente más información sobre nosotros!</h1>
     </div>
   );
 };

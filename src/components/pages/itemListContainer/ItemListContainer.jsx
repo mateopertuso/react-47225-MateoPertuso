@@ -1,26 +1,56 @@
+
 import { useState, useEffect } from "react";
-import { products } from "../../../productsMock";
 
 import ItemList from "./ItemList";
 import { useParams } from "react-router-dom";
+
+
+import { getDocs, collection, query, where, addDoc } from "firebase/firestore";
+import { db } from "../../../firebaseConfig";
+import ItemListSkeleton from "./ItemSkeleton";
+
 
 const ItemListContainer = () => {
   const [items, setItems] = useState([]);
 
   const { categoryName } = useParams();
-  console.log(categoryName ? "estoy intentando filtrar" : "Estoy en el home");
 
   useEffect(() => {
-    const productosFiltrados = products.filter( product => product.category === categoryName)
-   
-    const tarea = new Promise((resolve, reject) => {
-      resolve( categoryName ? productosFiltrados : products );
-    });
+    let productsCollection = collection(db, "products");
 
-    tarea.then((res) => setItems(res)).catch((error) => console.log(error));
+    let consulta = undefined;
+
+    if (!categoryName) {
+      // SI NO EXISTE CATEGORYNAME ---> todos mis productos
+      consulta = productsCollection;
+    } else {
+      // SI EXISTE CATEGORYNAME ---> parte de mis productos
+      consulta = query(
+        productsCollection,
+        where("category", "==", categoryName)
+      );
+    }
+
+    getDocs(consulta).then((res) => {
+      let newArray = res.docs.map((product) => {
+        return { ...product.data(), id: product.id };
+      });
+
+      setItems(newArray);
+    });
   }, [categoryName]);
 
-  return <ItemList items={items} />;
+  return (
+    <>
+      {items.length <= 0 ? (
+        <ItemListSkeleton />
+      ) : (
+        <ItemList items={items} categoryName={categoryName} />
+      )}
+    </>
+  );
 };
 
 export default ItemListContainer;
+
+

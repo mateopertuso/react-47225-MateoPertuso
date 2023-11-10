@@ -15,15 +15,15 @@ const ProductCard = ({ item }) => {
         margin: 2,
         display: "flex",
         flexDirection: " column",
-        backgroundColor: "#1202"
+        backgroundColor: "#1202",
       }}
     >
       <CardMedia
-        sx={{ height: 140 }}
+        sx={{ height: 150 }}
         image={item.img}
         title={`image ${item.title}`}
-        />
-      <CardContent>
+      />
+      <CardContent sx={{ maxWidth: 350 }}>
         <Typography gutterBottom variant="h4" component="div">
           {item.title}
         </Typography>
@@ -35,11 +35,17 @@ const ProductCard = ({ item }) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Link to={`/itemDetail/${item.id}`}>
-          <Button size="small" variant="outlined">
-            Ver detalle
+        {item.stock > 0 ? (
+          <Link to={`/itemDetail/${item.id}`}>
+            <Button size="small" variant="outlined">
+              Ver detalle
+            </Button>
+          </Link>
+        ) : (
+          <Button variant="contained" disabled>
+            Sin stock
           </Button>
-        </Link>
+        )}
       </CardActions>
     </Card>
   );
